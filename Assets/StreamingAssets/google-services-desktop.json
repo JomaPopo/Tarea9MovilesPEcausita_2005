@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "205877676051",
+    "firebase_url": "https://lab9movilespecausa2005-default-rtdb.firebaseio.com",
+    "project_id": "lab9movilespecausa2005",
+    "storage_bucket": "lab9movilespecausa2005.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205877676051:android:4d6805082fb6a89ce897e6",
+        "android_client_info": {
+          "package_name": "com.JomaCompanyPE.LAB9"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhxLIWSLwa_VG7sVmbx6pkILWwHSKOl2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
