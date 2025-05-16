@@ -50,6 +50,32 @@ public class StaticObjectPooling : MonoBehaviour
             poolDictionary.Add(pools[i].tag, objectPool);
         }
     }
+    public void CreatePool(string tag, GameObject prefab, int size)
+    {
+        if (poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning("Pool with tag " + tag + " already exists.");
+            return;
+        }
+
+        Queue<PoolObject> objectPool = new Queue<PoolObject>();
+
+        for (int i = 0; i < size; i++)
+        {
+            GameObject obj = Instantiate(prefab);
+            PoolObject poolObj = obj.GetComponent<PoolObject>();
+            if (poolObj == null)
+            {
+                poolObj = obj.AddComponent<PoolObject>();
+            }
+
+            poolObj.poolTag = tag;
+            obj.SetActive(false);
+            objectPool.Enqueue(poolObj);
+        }
+
+        poolDictionary.Add(tag, objectPool);
+    }
 
     public PoolObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
