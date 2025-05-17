@@ -22,13 +22,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Actualizar la altura máxima alcanzada
-        if (transform.position.y > highestPoint)
+        float height = transform.position.y;
+
+        if (height > highestPoint)
         {
-            highestPoint = transform.position.y;
-            // Actualizar el score con la altura máxima (convertida a entero)
-            GameManager.Instance.UpdateScore(Mathf.FloorToInt(highestPoint));
+            highestPoint = height;
         }
+
+        // Actualizar el score siempre, basado en la altura más alta
+        GameManager.Instance.UpdateScore(Mathf.FloorToInt(highestPoint));
 
         // Saltar automáticamente cuando está en el suelo
         if (isGrounded)
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
+
 
     void FixedUpdate()
     {

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -8,12 +7,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private TMP_Text finalScoreText;
-    [SerializeField] private TMP_Text highScoreText;
 
-    private int currentScore = 0; // Variable para almacenar el puntaje actual
+    private int currentScore = 0;
     private int highScore = 0;
+
+    private int lastDisplayedScore = -1;
+    private int lastDisplayedHighScore = -1;
 
     private void Awake()
     {
@@ -25,42 +27,56 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         highScore = PlayerPrefs.GetInt("HighScore", 0);
-        UpdateScoreDisplay(); // Inicializa el puntaje en 0 al inicio
+        UpdateScoreDisplay(); // Mostrar los puntajes al inicio
     }
 
     private void Update()
     {
-        // Actualiza el texto del puntaje en cada frame (innecesario si no hay cambios)
+        // Mostrar puntajes en tiempo real si cambian
         UpdateScoreDisplay();
     }
 
     public void UpdateScore(int score)
     {
-        currentScore = score; // Actualiza el puntaje actual
-        UpdateScoreDisplay(); // Actualiza el texto del puntaje
-    }
+        currentScore = score;
 
-    public void AddScore(int points)
-    {
-        currentScore += points; // Añade puntos al puntaje actual
-        UpdateScoreDisplay(); // Actualiza el texto del puntaje
-    }
-
-    private void UpdateScoreDisplay()
-    {
-        scoreText.text = $"Score: {currentScore}"; // Actualiza el texto del puntaje
-    }
-
-    public void GameOver(int finalscore)
-    {
+        // Si superamos el high score, lo actualizamos en tiempo real
         if (currentScore > highScore)
         {
             highScore = currentScore;
             PlayerPrefs.SetInt("HighScore", highScore);
         }
+    }
 
+    public void AddScore(int points)
+    {
+        currentScore += points;
+
+        if (currentScore > highScore)
+        {
+            highScore = currentScore;
+            PlayerPrefs.SetInt("HighScore", highScore);
+        }
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        if (lastDisplayedScore != currentScore)
+        {
+            scoreText.text = $"Score: {currentScore}";
+            lastDisplayedScore = currentScore;
+        }
+
+        if (lastDisplayedHighScore != highScore)
+        {
+            highScoreText.text = $"High Score: {highScore}";
+            lastDisplayedHighScore = highScore;
+        }
+    }
+
+    public void GameOver(int finalScore)
+    {
         finalScoreText.text = $"Final Score: {currentScore}";
-        highScoreText.text = $"High Score: {highScore}";
         gameOverPanel.SetActive(true);
     }
 

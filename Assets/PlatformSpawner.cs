@@ -21,7 +21,7 @@ public class PlatformSpawner : MonoBehaviour
         {
             SpawnPlatform(i * spawnDistance);
         }
-        highestPlatformHeight = 4 * spawnDistance; // Inicializa con la altura de la última plataforma inicial
+        highestPlatformHeight = 4 * spawnDistance; // Inicializa con la altura de la ?ltima plataforma inicial
     }
 
     private void Update()
